@@ -15,7 +15,7 @@ contract InteractionsTest is Test {
 
     function setUp() external {
         DeployRaffle deployRaffle = new DeployRaffle();
-        (raffle, ) = deployRaffle.deployContract();
+        (raffle,) = deployRaffle.deployContract();
     }
 
     // testCreateSubscription
@@ -24,46 +24,24 @@ contract InteractionsTest is Test {
 
     function testSubscriptionCreated() public {
         CreateSubscription createSubscription = new CreateSubscription();
-        (
-            uint256 subId,
-            address vrfCoordinator,
-            address account
-        ) = createSubscription.createSubscriptionUsingConfig();
+        (uint256 subId, address vrfCoordinator, address account) = createSubscription.createSubscriptionUsingConfig();
         assert(subId > 0);
         assert(vrfCoordinator != address(0));
     }
 
     function testConsumerAdded() public {
         CreateSubscription createSubscription = new CreateSubscription();
-        (
-            uint256 subId,
-            address vrfCoordinator,
-            address account
-        ) = createSubscription.createSubscriptionUsingConfig();
+        (uint256 subId, address vrfCoordinator, address account) = createSubscription.createSubscriptionUsingConfig();
         AddConsumer addConsumer = new AddConsumer();
-        addConsumer.addConsumer(
-            address(raffle),
-            vrfCoordinator,
-            subId,
-            address(account)
-        );
+        addConsumer.addConsumer(address(raffle), vrfCoordinator, subId, address(account));
         assertTrue(addConsumer.consumerAddedForTesting());
     }
 
     function testSubscriptionFunded() public {
         CreateSubscription createSubscription = new CreateSubscription();
-        (
-            uint256 subId,
-            address vrfCoordinator,
-            address account
-        ) = createSubscription.createSubscriptionUsingConfig();
+        (uint256 subId, address vrfCoordinator, address account) = createSubscription.createSubscriptionUsingConfig();
         FundSubscription fundSubscription = new FundSubscription();
-        fundSubscription.fundSubscription(
-            vrfCoordinator,
-            subId,
-            address(0),
-            account
-        );
+        fundSubscription.fundSubscription(vrfCoordinator, subId, address(0), account);
         assertTrue(fundSubscription.subscriptionFundedForTesting());
     }
 }
