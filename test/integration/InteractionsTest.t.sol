@@ -24,7 +24,7 @@ contract InteractionsTest is Test {
 
     function testSubscriptionCreated() public {
         CreateSubscription createSubscription = new CreateSubscription();
-        (uint256 subId, address vrfCoordinator, address account) = createSubscription.createSubscriptionUsingConfig();
+        (uint256 subId, address vrfCoordinator,) = createSubscription.createSubscriptionUsingConfig();
         assert(subId > 0);
         assert(vrfCoordinator != address(0));
     }

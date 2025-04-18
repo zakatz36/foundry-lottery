@@ -34,7 +34,7 @@ contract HelperConfig is CodeConstants, Script {
         networkConfigs[11155111] = getSepoliaEthConfig();
     }
 
-    function getConfigByChainId(uint256 chainId) public returns (NetworkConfig memory) {
+    function getConfigByChainId(uint256 chainId) public returns (NetworkConfig memory config) {
         if (networkConfigs[chainId].vrfCoordinator != address(0)) {
             return networkConfigs[chainId];
         } else if (chainId == LOCAL_CHAIN_ID) {
@@ -46,7 +46,7 @@ contract HelperConfig is CodeConstants, Script {
         return getConfigByChainId(block.chainid);
     }
 
-    function getSepoliaEthConfig() public returns (NetworkConfig memory) {
+    function getSepoliaEthConfig() public pure returns (NetworkConfig memory) {
         return NetworkConfig({
             entranceFee: 0.01 ether,
             interval: 30, // 30 seconds
